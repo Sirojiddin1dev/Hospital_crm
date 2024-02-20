@@ -54,15 +54,25 @@ class Employee(models.Model):
         ('Famale', 'Famale')
     )
     gender = models.CharField(max_length=55,verbose_name='Gender', choices=GENDER_CHOICES)
-    room = models.ForeignKey(to='Rooms', verbose_name = 'Room',  on_delete=models.PROTECT)
+    room = models.ForeignKey(to='Room', verbose_name = 'Room',  on_delete=models.PROTECT)
     salary = models.BigIntegerField(verbose_name = 'Salary')
-    mutahasisligi = models.ForeignKey(to='Mutahasislik', verbose_name='Mutahasisligi', on_delete=models.CASCADE)
+    mutahasisligi = models.ForeignKey(to='Specialty', verbose_name='Mutahasisligi', on_delete=models.CASCADE)
     department = models.ForeignKey(to='Department', verbose_name='Department', on_delete=models.CASCADE)
     user = models.ForeignKey(to='User', verbose_name='User', on_delete=models.CASCADE)
 
     class Meta(Employee.Meta):
         verbose_name = 'Employee'
         verbose_name_plural = 'Employees'
+
+    def __str__(self):
+        return self.name
+
+class Specialty(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Specialty name')
+
+    class Meta(Specialty.Meta):
+        verbose_name = 'Specialty'
+        verbose_name_plural = 'Specialtys'
 
     def __str__(self):
         return self.name
@@ -193,16 +203,37 @@ class Testimonial(models.Model):
     message = models.CharField(max_length=255, verbose_name='Message', null=True)
     created = models.DateTimeField(auto_now=True)
 
+    class Meta(Testimonial.Meta):
+        verbose_name = 'Testimonial'
+        verbose_name_plural = 'Testimonials'
+
+    def __str__(self):
+        return self.name
+
 
 class Equipment(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
     type = models.CharField(max_length=255, verbose_name='Type')
     quantity = models.IntegerField(verbose_name='Quantity', default=1)
+    created = models.DateField(auto_now=True)
 
+    class Meta(Equipment.Meta):
+        verbose_name = 'Equipment'
+        verbose_name_plural = 'Equipment'
+
+    def __str__(self):
+        return self.name
 
 class Operation(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='Operation Name')
     patient = models.ForeignKey(to="Patients", verbose_name='Patient', on_delete=models.PROTECT)
     date = models.DateField(verbose_name="Operation date")
-    employees = models.ManyToManyField(Employee, verbose_name="Doctors")
+    employees = models.ManyToManyField(to='Employee', verbose_name="Doctors")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Operation price")
+
+    class Meta(Operation.Meta):
+        verbose_name = 'Operation'
+        verbose_name_plural = 'Operations'
+
+    def __str__(self):
+        return self.name
