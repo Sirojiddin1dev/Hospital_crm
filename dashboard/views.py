@@ -277,4 +277,7 @@ class AttendanceDestroyAPIView(DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 
-
+print("afsadsadsfadsf")
+print("afsadsadsfadsf")
+print("afsadsadsfadsf")
+print("afsadsadsfadsf")
