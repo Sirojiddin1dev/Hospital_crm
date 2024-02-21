@@ -277,5 +277,5 @@ class AttendanceDestroyAPIView(DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 
-print("keyingisi")
+print("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")
 
