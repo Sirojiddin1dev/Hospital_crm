@@ -278,4 +278,3 @@ class AttendanceDestroyAPIView(DestroyAPIView):
 
 
 
-print(salom)
