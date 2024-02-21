@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from main.models import User
-from main.serializers import UserSerializers
+from main.serializers import UserSerializer
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from django.contrib.auth import login, logout, authenticate
@@ -54,7 +54,7 @@ def signup_view(request):
         password=password,
         phone_number=phone_number
     )
-    ser = UserSerializers(new)
+    ser = UserSerializer(new)
     return Response(ser.data)
 
 
@@ -67,14 +67,14 @@ def logout_view(request):
 
 class GetUser(ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializers
+    serializer_class = UserSerializer
 
 
 class UpdateUser(UpdateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializers
+    serializer_class = UserSerializer
 
 
 class DeleteUser(DestroyAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializers
+    serializer_class = UserSerializer

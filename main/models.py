@@ -153,7 +153,7 @@ class Department(models.Model):
 
 class ClinicStatistic(models.Model):
     name = models.CharField(max_length=255, verbose_name='Clinic Name')
-    patients = models.ManyToManyField(to='Patients', verbose_name="Patients")
+    patients = models.ManyToManyField(to='Patient', verbose_name="Patients")
     operation = models.ManyToManyField(to='Operation', verbose_name="Operations")
     room = models.ManyToManyField(to='Room', verbose_name="Rooms")
     employee = models.ManyToManyField(to='Employee', verbose_name="Employee")
@@ -229,7 +229,7 @@ class Equipment(models.Model):
 
 class Operation(models.Model):
     name = models.CharField(max_length=255, verbose_name='Operation Name')
-    patient = models.ForeignKey(to="Patients", verbose_name='Patient', on_delete=models.PROTECT)
+    patient = models.ForeignKey(to="Patient", verbose_name='Patient', on_delete=models.PROTECT)
     date = models.DateField(verbose_name="Operation date")
     employees = models.ManyToManyField(to='Employee', verbose_name="Doctors")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Operation price")
