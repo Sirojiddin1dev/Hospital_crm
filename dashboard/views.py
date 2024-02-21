@@ -275,3 +275,7 @@ class AttendanceDestroyAPIView(DestroyAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     permission_classes = [IsAuthenticated]
+
+
+
+print(salom)
