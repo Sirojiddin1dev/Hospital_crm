@@ -58,15 +58,18 @@ class RoomListAPIView(ListAPIView):
     serializer_class = RoomSerializer
     permission_classes = [IsAuthenticated]
 
+
 class RoomListCreateAPIView(ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsAuthenticated]
 
+
 class RoomUpdateAPIView(UpdateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsAuthenticated]
+
 
 class RoomDestroyAPIView(DestroyAPIView):
     queryset = Room.objects.all()
@@ -246,4 +249,29 @@ class OperationUpdateAPIView(UpdateAPIView):
 class OperationDestroyAPIView(DestroyAPIView):
     queryset = Operation.objects.all()
     serializer_class = OperationSerializer
+    permission_classes = [IsAuthenticated]
+
+
+# Operation views
+class AttendanceListAPIView(ListAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class AttendanceListCreateAPIView(ListCreateAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class AttendanceUpdateAPIView(UpdateAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class AttendanceDestroyAPIView(DestroyAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
     permission_classes = [IsAuthenticated]

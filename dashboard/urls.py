@@ -62,4 +62,10 @@ urlpatterns = [
     path('operations/create/', OperationListCreateAPIView.as_view()),
     path('operations/<int:pk>/update/', OperationUpdateAPIView.as_view()),
     path('operations/<int:pk>/delete/', OperationDestroyAPIView.as_view()),
+
+    # Attendance URLs
+    path('attendance/', AttendanceListAPIView.as_view()),
+    path('attendance/create/', AttendanceListCreateAPIView.as_view()),
+    path('attendance/<int:pk>/update/', AttendanceUpdateAPIView.as_view()),
+    path('attendance/<int:pk>/delete/', AttendanceDestroyAPIView.as_view()),
 ]

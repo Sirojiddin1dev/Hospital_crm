@@ -78,3 +78,9 @@ class OperationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Operation
         fields = '__all__'
+
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = '__all__'
