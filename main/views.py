@@ -192,7 +192,9 @@ def filter_operation_by_date(request):
 def filter_operation_by_employee(request):
     employee = request.GET.get('employee')
     operation = Operation.objects.filter(emloyee=employee)
-    operation = OperationSerializer(operation)
+    operation = OperationSerial
+
+    izer(operation)
     return Response(ser.data)
 
 
