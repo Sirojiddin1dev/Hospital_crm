@@ -36,7 +36,7 @@ class Employee(models.Model):
         ('Admin', 'Admin'),
     )
     lavozimi = models.CharField(max_length=55, verbose_name='lavozim', choices=LAVOZIM_CHOICES)
-    birth_date = models.DateField(verbose_name = 'Your birthday')
+    birth_date = models.DateField(verbose_name='Your birthday')
     phone_number = models.CharField(max_length=13, null=True, blank=True, verbose_name='Phone_Number', validators=[
         RegexValidator(
             regex='^[\+]9{2}8{1}[0-9]{9}$',
@@ -97,7 +97,7 @@ class Circulation(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=50, null=True, verbose_name="Room Name")
-    STATUS_CHOICES =(
+    STATUS_CHOICES = (
         ('Ekonom', 'Ekonom'),
         ('Lux', 'Lux'),
     )

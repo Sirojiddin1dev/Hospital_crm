@@ -63,7 +63,7 @@ def filter_equipment_by_type(request):
 @api_view(['GET'])
 def filter_equipment_by_name(request):
     name = request.GET.get('name')
-    equipment = Equipment.objects.filter(name=name)
+    equipment = Equipment.objects.filter(name__icontains=name)
     ser = EquipmentSerializer(equipment)
     return Response(ser.data)
 
@@ -85,7 +85,7 @@ def filter_equipment_by_room(request):
 @api_view(['GET'])
 def filter_patient_by_name(request):
     name = request.GET.get('name')
-    patient = Patient.objects.filter(name=name)
+    patient = Patient.objects.filter(name__icontains=name)
     ser = PatientSerializer(patient)
     return Response(ser.data)
 
@@ -175,7 +175,7 @@ def filter_operation_by_patient(request):
 @api_view(['GET'])
 def filter_operation_by_name(request):
     name = request.GET.get('name')
-    operation = Operation.objects.filter(name=name)
+    operation = Operation.objects.filter(name__icontains=name)
     ser = OperationSerializer(operation)
     return Response(ser.data)
 
