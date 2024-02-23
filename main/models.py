@@ -61,6 +61,10 @@ class Employee(models.Model):
     department = models.ForeignKey(to='Department', verbose_name='Department', on_delete=models.CASCADE)
     user = models.ForeignKey(to='User', verbose_name='User', on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.phone_number)
+        super().save(self, *args, **kwargs)
+
     class Meta:
         verbose_name = 'Employee'
         verbose_name_plural = 'Employees'
@@ -131,6 +135,28 @@ class Payment(models.Model):
         ('unpaid', 'unpaid'),
     )
     status = models.CharField(max_length=20, verbose_name="status", choices=STATUS_CHOICES)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=8,
+            border=4,
+        )
+        qr.add_data(f"Your data to encode in the QR code: {self.status}")
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
+        buffer = BytesIO()
+        img.save(buffer)
+        buffer.seek(0)
+
+        self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.code
 
     class Meta:
         verbose_name = 'Payment'

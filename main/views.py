@@ -194,6 +194,4 @@ def filter_operation_by_employee(request):
     operation = Operation.objects.filter(emloyee=employee)
     ser = OperationSerializer(operation)
     return Response(ser.data)
-
-
 """END OPERATION FILTER API"""
