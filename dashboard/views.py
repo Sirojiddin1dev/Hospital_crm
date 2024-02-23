@@ -275,7 +275,3 @@ class AttendanceDestroyAPIView(DestroyAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     permission_classes = [IsAuthenticated]
-
-
-print("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")
-
