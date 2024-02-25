@@ -1,6 +1,5 @@
 from rest_framework.generics import ListAPIView, ListCreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
-from main.models import *
 from main.serializers import *
 
 
