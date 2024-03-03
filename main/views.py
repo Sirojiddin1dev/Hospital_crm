@@ -232,9 +232,9 @@ def filter_room_by_capacity(request):
 
 
 @api_view(['GET'])
-def filter_room_by_capacity(request):
-    capacity = request.GET.get('capacity')
-    room = Room.objects.filter(capacity=capacity)
+def filter_room_by_booked(request):
+    booked = request.GET.get('booked')
+    room = Room.objects.filter(booked=booked)
     ser = RoomSerializer(room, many=True)
     return Response(ser.data)
 

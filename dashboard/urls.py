@@ -4,6 +4,10 @@ from .views import *
 
 urlpatterns = [
     # Employee URLs
+    path('employees/', KassaListAPIView.as_view()),
+    path('employees/create/', KassaListCreateAPIView.as_view()),
+
+    # Employee URLs
     path('employees/', EmployeeListAPIView.as_view()),
     path('employees/create/', EmployeeListCreateAPIView.as_view()),
     path('employees/<int:pk>/update/', EmployeeUpdateAPIView.as_view()),

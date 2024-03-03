@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 import qrcode
 from io import BytesIO
 from django.core.files import File
+from datetime import timezone
 
 
 class User(AbstractUser):
@@ -101,15 +102,22 @@ class Room(models.Model):
         ('Ekonom', 'Ekonom'),
         ('Lux', 'Lux'),
     )
-    status = models.CharField(max_length=20, null=True, verbose_name="Status",choices=STATUS_CHOICES)
+    status = models.CharField(max_length=20, null=True, verbose_name="Status", choices=STATUS_CHOICES)
     capacity = models.BigIntegerField(validators=[MinValueValidator(0)], verbose_name="Capacity")
+    booked = models.BooleanField(default=False, verbose_name='Is booked')
     type = models.CharField(max_length=255, verbose_name="Type")
+    patient = models.ManyToManyField(to='Patient', blank=True, verbose_name='Patient')
     department = models.ForeignKey(to='Department', on_delete=models.CASCADE, verbose_name="Department")
     equipment = models.ManyToManyField(to='Equipment', verbose_name="Equipment")
 
     class Meta:
         verbose_name = 'Room'
         verbose_name_plural = 'Rooms'
+
+    def clean(self):
+        if self.capacity == 4:
+            self.booked = True
+            return self.booked
 
     def __str__(self):
         return self.name
@@ -123,7 +131,7 @@ class Kassa(models.Model):
 class Payment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, verbose_name="Amount")
     date = models.DateField(null=True, verbose_name="Date")
-    TYPE_CHOICES =(
+    TYPE_CHOICES = (
         ('Click', 'Click'),
         ('Cash', 'Cash'),
     )
@@ -161,9 +169,6 @@ class Payment(models.Model):
     class Meta:
         verbose_name = 'Payment'
         verbose_name_plural = 'Payments'
-
-    def __str__(self):
-        return self.status
 
 
 class Department(models.Model):
@@ -256,11 +261,15 @@ class Equipment(models.Model):
 class Operation(models.Model):
     name = models.CharField(max_length=255, verbose_name='Operation Name')
     patient = models.ForeignKey(to="Patient", verbose_name='Patient', on_delete=models.PROTECT)
-    date = models.DateField(verbose_name="Operation date")
+    date = models.DateField(verbose_name='Operation date')
+    start_time = models.DateTimeField(verbose_name="Start time")
+    end_time = models.DateTimeField(verbose_name="End time")
     employees = models.ManyToManyField(to='Employee', verbose_name="Doctors")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Operation price")
+    room = models.ForeignKey(to='Room', verbose_name='Operation room', on_delete=models.PROTECT)
 
     class Meta:
+        unique_together = ['date', 'start_time', 'room']
         verbose_name = 'Operation'
         verbose_name_plural = 'Operations'
 
@@ -269,8 +278,8 @@ class Operation(models.Model):
 
 
 class Attendance(models.Model):
-    employee = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
-    date = models.DateField()
+    employee = models.ForeignKey(to='Employee', verbose_name='employee', on_delete=models.CASCADE)
+    date = models.DateField('date', default=timezone)
     chek_in = models.TimeField(null=True, blank=True)
     chek_out = models.TimeField(null=True, blank=True)
 
@@ -284,4 +293,4 @@ class Attendance(models.Model):
             raise ValidationError('Check-out time must be after chek-in time.')
 
     def __str__(self):
-        return f'{self.employee.full_name} - {self.date}'
+        return f'{self.employee.name} - {self.date}'

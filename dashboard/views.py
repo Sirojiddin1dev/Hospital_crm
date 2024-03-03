@@ -3,6 +3,18 @@ from rest_framework.permissions import IsAuthenticated
 from main.serializers import *
 
 
+class KassaListAPIView(ListAPIView):
+    queryset = Kassa.objects.all()
+    serializer_class = KassaSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class KassaListCreateAPIView(ListCreateAPIView):
+    queryset = Kassa.objects.all()
+    serializer_class = KassaSerializer
+    permission_classes = [IsAuthenticated]
+
+
 class EmployeeListAPIView(ListAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer

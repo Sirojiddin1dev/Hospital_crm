@@ -39,6 +39,7 @@ urlpatterns = [
     path('filter/room/by-name/', filter_room_by_name),
     path('filter/room/by-status/', filter_room_by_status),
     path('filter/room/by-capacity/', filter_room_by_capacity),
+    path('filter/room/by-booked/', filter_room_by_booked),
     path('filter/room/by-equipment/', filter_room_by_equipment),
     path('filter/room/by-department/', filter_room_by_department),
 
